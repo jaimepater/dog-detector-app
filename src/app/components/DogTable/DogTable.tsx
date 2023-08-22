@@ -86,7 +86,7 @@ const DogTable = ({ token }: DogTableProps) => {
 
   const handleDownload = (imageUrl: string) => {
     const id = imageUrl.split('/').pop();
-    const constructedURL = imageUrl.replace(id || '', `source/${id}.jpg`);
+    const constructedURL = imageUrl.replace(id || '', `source/${id}`);
     const link = document.createElement('a');
     link.href = constructedURL;
     link.download = `source/${id}.jpg`;
