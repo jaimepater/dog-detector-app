@@ -84,15 +84,22 @@ const DogTable = ({ token }: DogTableProps) => {
     }));
   };
 
-  const handleDownload = (imageUrl: string) => {
+  const handleDownload = async (imageUrl: string) => {
     const id = imageUrl.split('/').pop();
     const constructedURL = imageUrl.replace(id || '', `source/${id}`);
     const link = document.createElement('a');
-    link.href = constructedURL;
+    const response = await fetch(constructedURL);
+    const blob = await response.blob();
+
+    const blobURL = URL.createObjectURL(blob);
+    link.href = blobURL;
     link.download = `source_${id}.jpg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+    // Release the blob URL
+    URL.revokeObjectURL(blobURL);
   };
 
   return (
