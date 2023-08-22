@@ -84,6 +84,17 @@ const DogTable = ({ token }: DogTableProps) => {
     }));
   };
 
+  const handleDownload = (imageUrl: string) => {
+    const id = imageUrl.split('/').pop();
+    const constructedURL = imageUrl.replace(id || '', `source/${id}.jpg`);
+    const link = document.createElement('a');
+    link.href = constructedURL;
+    link.download = `source/${id}.jpg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <Container>
       <Box display="flex" alignItems="center" justifyContent="center">
@@ -123,14 +134,13 @@ const DogTable = ({ token }: DogTableProps) => {
           </TableHead>
           <TableBody>
             {data?.dogs?.map((dog) => (
-              <TableRow
-                key={dog._id}
-                onClick={() => handleOpenModal(dog.image)}
-              >
-                <TableCell>
+              <TableRow key={dog._id}>
+                <TableCell onClick={() => handleOpenModal(dog.image)}>
                   <img src={dog.image} alt="Dog" width="50" height="50" />
                 </TableCell>
-                <TableCell>{`${moment(dog.date)
+                <TableCell onClick={() => handleDownload(dog.image)}>{`${moment(
+                  dog.date,
+                )
                   .format('LLL')
                   .replace('AM', 'am')
                   .replace('PM', 'pm')
