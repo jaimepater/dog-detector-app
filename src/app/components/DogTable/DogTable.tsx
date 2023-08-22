@@ -89,7 +89,7 @@ const DogTable = ({ token }: DogTableProps) => {
     const constructedURL = imageUrl.replace(id || '', `source/${id}`);
     const link = document.createElement('a');
     link.href = constructedURL;
-    link.download = `source/${id}.jpg`;
+    link.download = `source_${id}.jpg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
